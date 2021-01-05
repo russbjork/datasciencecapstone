@@ -61,7 +61,8 @@ chars <- sapply(list(nchar(blogsdata), nchar(newsdata), nchar(twitterdata)), sum
 words <- sapply(list(blogsdata, newsdata, twitterdata), stri_stats_latex)[4,]
 wpl <- lapply(list(blogsdata, newsdata, twitterdata), function(x) stri_count_words(x))
 lines <- sapply(list(blogsdata, newsdata, twitterdata), length)
-wordsum = sapply(list(blogsdata, newsdata, twitterdata), function(x) summary(stri_count_words(x))[c('Min.', 'Mean', 'Max.')])
+wordsum = sapply(list(blogsdata, newsdata, twitterdata), 
+  function(x) summary(stri_count_words(x))[c('Min.', 'Mean', 'Max.')])
 rownames(wordsum) = c('WPL.Min', 'WPL.Mean', 'WPL.Max')
 summary <- data.frame(
   Files = c("en_US.blogs.txt", "en_US.news.txt", "en_US.twitter.txt"),
@@ -72,7 +73,8 @@ summary <- data.frame(
   Lines =lines
 )
 kable(summary,
+      col.names = c("Files","File Size","Characters","Words","WPL Min","WPL Mean","WPL Max","Lines"),
       row.names = FALSE,
       align = c("l", rep("r", 7)),
-      caption = "Data Files Summary") %>% kable_styling(position = "left")
+      caption = "Data Files Summary") %>% kable_styling(bootstrap_options = c("striped", "hover"))
 ################################################################################
