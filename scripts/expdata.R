@@ -48,7 +48,31 @@ rm(con)
 ################################################################################
 
 
-
-
-
-##  Explore the data within the sample
+##  Exploring the data from the three text files
+################################################################################
+library(stringi)
+library(kableExtra)
+# assign sample size
+sample = 0.1
+# file size
+files <- round(file.info(c(blogsfile,newsfile,twitterfile))$size / 1024 ^ 2)
+# characters, words, words per line, and lines summary data
+chars <- sapply(list(nchar(blogsdata), nchar(newsdata), nchar(twitterdata)), sum)
+words <- sapply(list(blogsdata, newsdata, twitterdata), stri_stats_latex)[4,]
+wpl <- lapply(list(blogsdata, newsdata, twitterdata), function(x) stri_count_words(x))
+lines <- sapply(list(blogsdata, newsdata, twitterdata), length)
+wordsum = sapply(list(blogsdata, newsdata, twitterdata), function(x) summary(stri_count_words(x))[c('Min.', 'Mean', 'Max.')])
+rownames(wordsum) = c('WPL.Min', 'WPL.Mean', 'WPL.Max')
+summary <- data.frame(
+  Files = c("en_US.blogs.txt", "en_US.news.txt", "en_US.twitter.txt"),
+  FileSize = paste(files, " MB"),
+  Characters = chars,
+  Words = words,
+  WPL = t(rbind(round(wordsum))),
+  Lines =lines
+)
+kable(summary,
+      row.names = FALSE,
+      align = c("l", rep("r", 7)),
+      caption = "Data Files Summary") %>% kable_styling(position = "left")
+################################################################################
