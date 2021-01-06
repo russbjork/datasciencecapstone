@@ -48,24 +48,22 @@ rm(con)
 ################################################################################
 
 
-##  Exploring the data from the three text files
+##  Summarize the data from the three text files
 ################################################################################
 library(stringi)
 library(kableExtra)
-# assign sample size
-sample = 0.1
 # file size
-files <- round(file.info(c(blogsfile,newsfile,twitterfile))$size / 1024 ^ 2)
+files <- round(file.info(c(twitterfile,newsfile,blogsfile))$size / 1024 ^ 2)
 # characters, words, words per line, and lines summary data
-chars <- sapply(list(nchar(blogsdata), nchar(newsdata), nchar(twitterdata)), sum)
-words <- sapply(list(blogsdata, newsdata, twitterdata), stri_stats_latex)[4,]
-wpl <- lapply(list(blogsdata, newsdata, twitterdata), function(x) stri_count_words(x))
-lines <- sapply(list(blogsdata, newsdata, twitterdata), length)
-wordsum = sapply(list(blogsdata, newsdata, twitterdata), 
+chars <- sapply(list(nchar(twitterdata), nchar(newsdata), nchar(blogsdata)), sum)
+words <- sapply(list(twitterdata, newsdata, blogsdata), stri_stats_latex)[4,]
+wpl <- lapply(list(twitterdata, newsdata, blogsdata), function(x) stri_count_words(x))
+lines <- sapply(list(twitterdata, newsdata, blogsdata), length)
+wordsum = sapply(list(twitterdata, newsdata, blogsdata), 
   function(x) summary(stri_count_words(x))[c('Min.', 'Mean', 'Max.')])
 rownames(wordsum) = c('WPL.Min', 'WPL.Mean', 'WPL.Max')
 summary <- data.frame(
-  Files = c("en_US.blogs.txt", "en_US.news.txt", "en_US.twitter.txt"),
+  Files = c("en_US.twitter.txt", "en_US.news.txt", "en_US.blogs.txt"),
   FileSize = paste(files, " MB"),
   Characters = chars,
   Words = words,
@@ -76,5 +74,64 @@ kable(summary,
       col.names = c("Files","File Size","Characters","Words","WPL Min","WPL Mean","WPL Max","Lines"),
       row.names = FALSE,
       align = c("l", rep("r", 7)),
-      caption = "Data Files Summary") %>% kable_styling(bootstrap_options = c("striped", "hover"))
+      caption = "Data Files Summary") %>% 
+      kable_styling(bootstrap_options = c("striped", "hover", font_size = 10))
+################################################################################
+
+
+## Plotting out the summary on each file
+################################################################################
+library(ggplot2)
+plot1 <- qplot(wpl[[1]],
+               geom = "histogram",
+               main = "Twitter",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 100)) +
+               scale_y_continuous(labels = scales::comma)
+plot2 <- qplot(wpl[[2]],
+               geom = "histogram",
+               main = "News",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 200)) +
+               scale_y_continuous(labels = scales::comma)
+plot3 <- qplot(wpl[[3]],
+               geom = "histogram",
+               main = "Blogs",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 300)) +
+              scale_y_continuous(labels = scales::comma)
+plot1
+plot2
+plot3
+################################################################################
+
+
+## Preparing samples of each file for analysis
+################################################################################
+# initiate a seed for reproducability
+set.seed(216786)
+# create samples and a sample file for each data file
+sample = 0.1
+twittersample <- sample(twitterdata, length(twitterdata) * sample, replace = FALSE)
+blogsample <- sample(blogsdata, length(blogsdata) * sample, replace = FALSE)
+newssample <- sample(newsdata, length(newsdata) * sample, replace = FALSE)
+# remove all non-English characters
+twittersample <- iconv(twittersample, "latin1", "ASCII", sub = "")
+blogsample <- iconv(blogsample, "latin1", "ASCII", sub = "")
+newssample <- iconv(newssample, "latin1", "ASCII", sub = "")
+# combine all three data sets into a single data set and write to disk
+sampledata <- c(twittersample, newssample, blogsample)
+samplefile <- "data/final/en_US/en_US.sample.txt"
+con <- file(samplefile, open = "w")
+writeLines(sampledata, con)
+close(con)
+# get number of lines and words from the sample data set
+samplelines <- length(sampledata);
+samplewords <- sum(stri_count_words(sampledata))
+# remove variables no longer needed to free up memory
+rm(twitterdata, blogsdata, newsdata)
+rm(twittersample, blogsample, newssample)
 ################################################################################
