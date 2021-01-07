@@ -1,0 +1,214 @@
+---
+title: "Data Science Capstone"
+subtitle: "Milestone Report"
+author: "Russ Bjork"
+date: "1/7/2021"
+output: html_document
+---
+
+<body style="background-color:LightSkyBlue;">
+
+
+## Overview:   
+
+This is a milestone report for the Data Science Capstone project.  The goal of    
+this milestone   report is to   display a fundamental level of familiarity with   
+the raw data and a direction with apre diction algorithm.  The information  
+presented will include a thorough exploratory analysis followed by a plan for     
+creating the prediction algorithm and Shiny app.  Tables and plots will be  
+presented to illustrate important summaries of the data.    
+
+## The Data:   
+
+The raw data used for this project came from SwiftKey.  The data will be  
+utilized in conjuction Natural Language Processing techniques to make a predictive  
+model.  The data is from a corpus called HC Corpora. The data is provided in four   
+LOCALEs, the four locales include: en_US, de_DE, ru_RU and fi_FI. This project   
+will only utilize the English corpora.  
+
+Capstone Data:  https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip  
+
+The unified document corpus will be compiled from the following three sources  
+of text data:  
+
+- Twitter  
+- News  
+- Blogs  
+
+# Environment Configuration:  
+
+Loading required packages and libraries.  Configuring specific knitr parameters.   
+Clearing the environment workspace to free up memory and resources.  
+```{r setup, include=FALSE, echo=FALSE}
+library(dplyr)
+library(ggplot2)
+library(stringi)
+library(kableExtra)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(fig.width=10, fig.height=10)
+rm(list = ls(all.names = TRUE))
+```
+
+##  Initial review of the raw data files:  
+
+Each of the US locale files will be opened and a few lines will be pulled to get  
+an initial feel for the data.  The initial data look drives the full data loads  
+followed by the data exploration.  This quick look helps solidify an understanding   
+of the data structures and general layout.  This initial peek shows how much  
+larger the news and blog lines are compared to the twitter lines.
+
+en_US.twitter.txt File:   
+```{r echo=FALSE}
+## Load and view small pieces of the raw data files
+## Peek into the twitter data
+con <- file("data/final/en_US/en_US.twitter.txt", "r") 
+ds1 <- readLines(con, 5)
+close(con)
+ds1
+```
+
+en_US.news.txt File:   
+```{r echo=FALSE}
+## Peek into the news data
+con <- file("data/final/en_US/en_US.news.txt", "r") 
+ds2 <- readLines(con, 5)
+close(con)
+ds2
+```
+
+en_US.blogs.txt File:  
+```{r echo=FALSE}
+## Peek into the blogs data
+con <- file("data/final/en_US/en_US.blogs.txt", "r") 
+ds3 <- readLines(con, 5)
+close(con)
+ds3
+```
+
+## Initiate a full data load:
+### Loading the entire dataset to initiate some exploration
+
+The twitter, news, and blogs data will be loaded in entirety to begin a summarization  
+of the raw data.  This step will help shed insights on the data layout, design, and  
+general structure.  
+
+```{r echo=FALSE}
+trainURL <- "https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip"
+trainDataFile <- "data/Coursera-SwiftKey.zip"
+if (!file.exists('data')) {
+  dir.create('data')
+}
+if (!file.exists("data/final/en_US")) {
+  tempFile <- tempfile()
+  download.file(trainURL, tempFile)
+  unzip(tempFile, exdir = "data")
+  unlink(tempFile)
+}
+# twitter
+twitterfile <- "data/final/en_US/en_US.twitter.txt"
+con <- file(twitterfile, open = "r")
+twitterdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+close(con)
+rm(con)
+# news
+newsfile <- "data/final/en_US/en_US.news.txt"
+con <- file(newsfile, open = "r")
+newsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+close(con)
+# blogs
+blogsfile <- "data/final/en_US/en_US.blogs.txt"
+con <- file(blogsfile, open = "r")
+blogsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+close(con)
+```
+
+##  Summarization of the data from the three text files:  
+
+In preparation to construct the unified document corpus and clean the data, a basic  
+summary of the three text files has been constructed. This summary includes file  
+sizes, number of lines, number of characters, and number of words for each  
+source file. Some basic statistics on the number of words per line   
+has been summarized.  
+
+```{r echo=FALSE}
+library(stringi)
+library(kableExtra)
+# file size
+files <- round(file.info(c(twitterfile,newsfile,blogsfile))$size / 1024 ^ 2)
+# characters, words, words per line, and lines summary data
+chars <- sapply(list(nchar(twitterdata), nchar(newsdata), nchar(blogsdata)), sum)
+words <- sapply(list(twitterdata, newsdata, blogsdata), stri_stats_latex)[4,]
+wpl <- lapply(list(twitterdata, newsdata, blogsdata), function(x) stri_count_words(x))
+lines <- sapply(list(twitterdata, newsdata, blogsdata), length)
+wordsum = sapply(list(twitterdata, newsdata, blogsdata), 
+  function(x) summary(stri_count_words(x))[c('Min.', 'Mean', 'Max.')])
+rownames(wordsum) = c('WPL.Min', 'WPL.Mean', 'WPL.Max')
+summary <- data.frame(
+  Files = c("en_US.twitter.txt", "en_US.news.txt", "en_US.blogs.txt"),
+  FileSize = paste(files, " MB"),
+  Characters = chars,
+  Words = words,
+  WPL = t(rbind(round(wordsum))),
+  Lines =lines
+)
+kable(summary,
+      col.names = c("Files","File Size","Characters","Words","WPL Min","WPL Mean","WPL Max","Lines"),
+      row.names = FALSE,
+      align = c("l", rep("r", 7)),
+      caption = "Data Files Summary") %>% 
+      kable_styling(bootstrap_options = c("hover", font_size = 12))
+```
+
+This summarized data shows that on average, each text file has a relatively low  
+number of words per line. A twitter which has the least words per line.  Blogs  
+tend to have the most words per line, followed by news feed file.  The lower  
+number of words per line for the Twitter data is expected as Twitter messaging  
+is just generally shorter. In general, most Twitter lines are pegged at the old  
+2017 limit of 140 characters.
+
+This data exploration and initial investigation shows that the text files are  
+fairly large. To improve processing time, a sample size of 10% will be  
+obtained from all three data files and then combined into a single data file.    
+This will be the corpus for subsequent analysis.
+
+## Plotting out the summary of each data file:
+```{r echo=FALSE}
+library(ggplot2)
+plot1 <- qplot(wpl[[1]],
+               geom = "histogram",
+               main = "Twitter",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 100)) +
+               scale_y_continuous(labels = scales::comma)
+plot2 <- qplot(wpl[[2]],
+               geom = "histogram",
+               main = "News",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 200)) +
+               scale_y_continuous(labels = scales::comma)
+plot3 <- qplot(wpl[[3]],
+               geom = "histogram",
+               main = "Blogs",
+               xlab = "Words per Line",
+               ylab = "Count",
+               binwidth = 1) + coord_cartesian(xlim = c(0, 300)) +
+              scale_y_continuous(labels = scales::comma)
+```
+
+### Plot of words per line for Twitter data:  
+```{r echo=FALSE} 
+plot1 
+```
+
+### Plot of words per line for News data:  
+```{r echo=FALSE} 
+plot2 
+```
+
+### Plot of words per line for Blogs data:  
+```{r echo=FALSE} 
+plot3 
+```

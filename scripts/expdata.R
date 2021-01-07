@@ -1,18 +1,20 @@
-##  Load and view small pieces of data 
+##  Load and view small pieces of the raw data files
 ################################################################################
-con <- file("data/en_US.twitter.txt", "r") 
-## Read the first line of text
-ds1 <- readLines(con, 1)
-ds1
-## Read the next line of text
-ds2 <- readLines(con, 1) 
-ds2
+## Peek into the twitter data
+con <- file("data/final/en_US/en_US.twitter.txt", "r") 
+ds1 <- readLines(con, 5)
 close(con)
-
-## Read in the entire text file
-con <- file("data/en_US.twitter.txt", "r") 
-ds3 <- readLines(con) 
-head(ds3)
+ds1
+## Peek into the news data
+con <- file("data/final/en_US/en_US.news.txt", "r") 
+ds2 <- readLines(con, 5)
+close(con)
+ds2
+## Peek into the blogs data
+con <- file("data/final/en_US/en_US.blogs.txt", "r") 
+ds3 <- readLines(con, 5)
+close(con)
+ds3
 ################################################################################
 
 
@@ -29,22 +31,22 @@ if (!file.exists("data/final/en_US")) {
   unzip(tempFile, exdir = "data")
   unlink(tempFile)
 }
-# blogs
-blogsfile <- "data/final/en_US/en_US.blogs.txt"
-con <- file(blogsfile, open = "r")
-blogsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
-close(con)
-# news
-newsfile <- "data/final/en_US/en_US.news.txt"
-con <- file(newsfile, open = "r")
-newsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
-close(con)
 # twitter
 twitterfile <- "data/final/en_US/en_US.twitter.txt"
 con <- file(twitterfile, open = "r")
 twitterdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
 close(con)
 rm(con)
+# news
+newsfile <- "data/final/en_US/en_US.news.txt"
+con <- file(newsfile, open = "r")
+newsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+close(con)
+# blogs
+blogsfile <- "data/final/en_US/en_US.blogs.txt"
+con <- file(blogsfile, open = "r")
+blogsdata <- readLines(con, encoding = "UTF-8", skipNul = TRUE)
+close(con)
 ################################################################################
 
 
