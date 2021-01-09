@@ -17,7 +17,7 @@ newsRDS = "data/final/en_US/en_newsRDS.rds"
 en_3gramRDS = "data/final/en_US/en_3gramRDS.rds"
 ################################################################################
 
-## Build the N-Gramsm, save as RDS file
+## Build the N-Grams, save as RDS file
 ################################################################################
 tidyText <- function(file, tidyfile) {
   con <- file(file, open="r")
