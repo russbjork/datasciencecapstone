@@ -204,22 +204,22 @@ tokenFrequency <- function(corpus, n = 1, rem_stopw = NULL) {
 startWord <- word(corpus, 1)  # get first word for each document
 startWord <- tokenFrequency(startWord, n = 1, NULL)  # determine most popular start words
 startWordPrediction <- startWord$token[1:3]  # select top 3 words to start word prediction app
-saveRDS(startWordPrediction, "data/start-word-prediction.RData")
+saveRDS(startWordPrediction, "data/swp.RData")
 
 # bigram
 bigram <- tokenFrequency(corpus, n = 2, NULL)
-saveRDS(bigram, "data/bigram.RData")
+saveRDS(bigram, "data/bgram.RData")
 remove(bigram)
 
 # trigram
 trigram <- tokenFrequency(corpus, n = 3, NULL)
 trigram <- trigram %>% filter(n > 1)
-saveRDS(trigram, "data/trigram.RData")
+saveRDS(trigram, "data/tgram.RData")
 remove(trigram)
 
 # quadgram
 quadgram <- tokenFrequency(corpus, n = 4, NULL)
 quadgram <- quadgram %>% filter(n > 1)
-saveRDS(quadgram, "data/quadgram.RData")
+saveRDS(quadgram, "data/qgram.RData")
 remove(quadgram)
 ################################################################################

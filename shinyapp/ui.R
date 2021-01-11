@@ -1,8 +1,7 @@
 # ui.R
-# Author: Jeffrey M. Hunter
-# Date: 28-JUL-2019
+# Author: Russ Bjork
+# Date: 1/10/2021
 # Description: Shiny UI, Coursera Data Science Capstone Final Project
-# GitHub: https://github.com/oraclejavanet/coursera-data-science-capstone
 
 library(shiny)
 library(shinythemes)
@@ -11,29 +10,33 @@ library(dplyr)
 library(tm)
 
 shinyUI(
-  navbarPage("Next Word Predict",
+  navbarPage("Next Word Prediction",
              theme = shinytheme("spacelab"),
              tabPanel("Home",
                       fluidPage(
-                        titlePanel("Home"),
+                        titlePanel("Start Prediction"),br(),
                         sidebarLayout(
                           sidebarPanel(
+                            br(),br(),
+                            sliderInput("numPredictions", "Number of Predictions:",
+                                        value = 1.0, min = 1.0, max = 3.0, step = 1.0),
+                            br(),
                             textInput("userInput",
                                       "Enter a word or phrase:",
                                       value =  "",
                                       placeholder = "Enter text here"),
-                            br(),
-                            sliderInput("numPredictions", "Number of Predictions:",
-                                        value = 1.0, min = 1.0, max = 3.0, step = 1.0)
                           ),
                           mainPanel(
-                            h4("Input text"),
-                            verbatimTextOutput("userSentence"),
-                            br(),
                             h4("Predicted words"),
                             verbatimTextOutput("prediction1"),
                             verbatimTextOutput("prediction2"),
-                            verbatimTextOutput("prediction3")
+                            verbatimTextOutput("prediction3"),
+                            br(),
+                            br(),
+                            br(),
+                            br(),
+                            h4("Input text"),
+                            verbatimTextOutput("userSentence")
                           )
                         )
                       )
@@ -62,9 +65,11 @@ shinyUI(
                             on GitHub:",
                           br(),
                           br(),
-                          a(target = "_blank", href = "https://github.com/russbjork/datasciencecapstone/shiny-app/",
+                          a(target = "_blank", href = "https://github.com/russbjork/datasciencecapstone/tree/main/shinyapp",
                             "Next Word Predict")),
                       br()
+             ),
+             tabPanel(title = "Exit", actionButton(inputId = "quit", label = "Quit")
              )
   )
 )
