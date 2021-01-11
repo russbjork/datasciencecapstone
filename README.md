@@ -47,7 +47,7 @@ are available on RPubs.
 
 ##### Links
 
-* Final project submission (Shiny App): <a target="_blank"  href="https://russbjork.shinyapps.io/datasciencecapstone/">https://russbjork.shinyapps.io/datasciencecapstonee/</a>
+* Final project submission (Shiny App): <a target="_blank"  href="https://russbjork.shinyapps.io/datasciencecapstone/">https://russbjork.shinyapps.io/datasciencecapstone/</a>
 
 * Final project submission (Presentation): <a target="_blank"  href="http://rpubs.com/russbjork/datasciencecapstone">http://rpubs.com/russbjork/datasciencecapstone/</a>
 
