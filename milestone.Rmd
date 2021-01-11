@@ -16,7 +16,7 @@ this milestone   report is to   display a fundamental level of familiarity with
 the raw data and a direction with a prediction algorithm.  The information   
 presented will include a thorough exploratory analysis followed by a plan for     
 creating the prediction algorithm and Shiny application.  Tables and plots will   
-be presented to illustrate important summaries of the data.    
+be presented to illustrate important summaries of the data.      
 
 ## The Data:   
 
