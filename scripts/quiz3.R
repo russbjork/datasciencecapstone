@@ -32,10 +32,10 @@ rbind(head(df[grep("reduce your happiness", df[,1]),],10),
       head(df[grep("reduce your hunger", df[,1]),]),10)
 ## 5. When you were in Holland you were like 1 inch away from me but you hadn't time to take a
 ##    minute,look,walk,picture
-rbind(head(df[grep("reduce your happiness", df[,1]),],10),
-      head(df[grep("reduce your sleepiness", df[,1]),],10),
-      head(df[grep("reduce your stress", df[,1]),],10),  #top and correct
-      head(df[grep("reduce your hunger", df[,1]),]),10)
+rbind(head(df[grep("take a minute", df[,1]),],10),
+      head(df[grep("take a look", df[,1]),],10),
+      head(df[grep("take a walk", df[,1]),],10),
+      head(df[grep("take a picture", df[,1]),]),10)  #top and correct
 ## 6. I'd just like all of these questions answered, a presentation of evidence, and a jury to settle the
 ##    matter,incident,case,account
 rbind(head(df[grep("reduce your happiness", df[,1]),],10),
