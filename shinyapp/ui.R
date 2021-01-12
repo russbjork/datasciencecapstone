@@ -19,24 +19,21 @@ shinyUI(
                           sidebarPanel(
                             br(),br(),
                             sliderInput("numPredictions", "Number of Predictions:",
-                                        value = 1.0, min = 1.0, max = 3.0, step = 1.0),
+                                        value = 3.0, min = 1.0, max = 3.0, step = 1.0),
                             br(),
                             textInput("userInput",
                                       "Enter a word or phrase:",
-                                      value =  "",
+                                      value =  "The",
                                       placeholder = "Enter text here"),
                           ),
                           mainPanel(
+                            h4("Input text"),
+                            verbatimTextOutput("userSentence"),
+                            br(),
                             h4("Predicted words"),
                             verbatimTextOutput("prediction1"),
                             verbatimTextOutput("prediction2"),
                             verbatimTextOutput("prediction3"),
-                            br(),
-                            br(),
-                            br(),
-                            br(),
-                            h4("Input text"),
-                            verbatimTextOutput("userSentence")
                           )
                         )
                       )
