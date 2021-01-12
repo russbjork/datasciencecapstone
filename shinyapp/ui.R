@@ -11,7 +11,7 @@ library(tm)
 
 shinyUI(
   navbarPage("Next Word Prediction",
-             theme = shinytheme("spacelab"),
+             theme = shinytheme("cyborg"),
              tabPanel("Home",
                       fluidPage(
                         titlePanel("Start Prediction"),br(),
