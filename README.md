@@ -31,7 +31,7 @@ predictive model.
 
 ##### Links
 
-* Milestone Report available on RPubs: <a target="_blank"  href="https://rpubs.com/russbjork/711150">https://rpubs.com/russbjork/711150</a>
+* Milestone Report available on RPubs: <a target="_blank"  href="https://rpubs.com/russbjork/713501">https://rpubs.com/russbjork/711150</a>
 
 ### Final Project Submission
 
