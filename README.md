@@ -31,7 +31,7 @@ predictive model.
 
 ##### Links
 
-* Milestone Report available on RPubs: <a target="_blank"  href="https://rpubs.com/russbjork/711150">https://rpubs.com/russbjork/711150</a>
+* Milestone Report available on RPubs: <a target="_blank"  href="https://rpubs.com/russbjork/713501">https://rpubs.com/russbjork/711150</a>
 
 ### Final Project Submission
 
@@ -47,8 +47,8 @@ are available on RPubs.
 
 ##### Links
 
-* Final project submission (Shiny App): <a target="_blank"  href="https://russbjork.shinyapps.io/datasciencecapstone/">https://russbjork.shinyapps.io/datasciencecapstone/</a>
+* Final project submission (Shiny App): <a target="_blank"  href="https://russell-bjork.shinyapps.io/Word_Prediction_Application/">https://russell-bjork.shinyapps.io/Word_Prediction_Application/</a>
 
-* Final project submission (Presentation): <a target="_blank"  href="http://rpubs.com/russbjork/datasciencecapstone">http://rpubs.com/russbjork/datasciencecapstone/</a>
+* Final project submission (Presentation): <a target="_blank"  href="https://rpubs.com/russbjork/713501">https://rpubs.com/russbjork/713501</a>
 
 * Source code files available on GitHub: <a target="_blank"   href="https://github.com/russbjork/datasciencecapstone/">https://github.com/russbjork/datasciencecapstone/</a>
