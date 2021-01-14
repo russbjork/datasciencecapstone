@@ -2,7 +2,7 @@ Word Prediction Application
 ========================================================
 author: Russ Bjork
 title:  Data Science Capstone
-date: 01/12/2021
+date: 01/15/2021
 autosize: true
 transition: rotate 
 class: smaller 
@@ -17,16 +17,16 @@ Application including an introduction to the
 application user interface and details about 
 the text prediction algorithm.
 
-The Next Word Predict app is located at:
+The Word Prediciton Application is located at:
 
 <ul>
-    <li><a target="_blank" href="https://jhunter.shinyapps.io/coursera-data-science-capstone/">https://jhunter.shinyapps.io/coursera-data-science-capstone/</a></li>
+    <li><a target="_blank" href="https://russell-bjork.shinyapps.io/Word_Prediction_Application/">https://russell-bjork.shinyapps.io/Word_Prediction_Application/</a></li>
 </ul>
 
 The source code files can be found on GitHub:
 
 <ul>
-    <li><a target="_blank" href="https://github.com/oraclejavanet/coursera-data-science-capstone/">https://github.com/oraclejavanet/coursera-data-science-capstone/</a></li>
+    <li><a target="_blank" href="https://github.com/russbjork/datasciencecapstone">https://github.com/russbjork/datasciencecapstone/</a></li>
 </ul>
 
 Check back regularly as the codebase is continually being updated with
@@ -37,16 +37,16 @@ new features and improvements.
 # **Shiny Application**
 
 <small>
-Next Word Predict is a Shiny app that uses a text
+The Word Prediction Application is a Shiny app that uses a text
 prediction algorithm to predict the next word(s) based on
 text entered by a user.
 
-The application will suggest the next word in a sentence
-using an n-gram algorithm. An n-gram is a contiguous sequence
-of *n* words from a given sequence of text.
+The application will suggest the next word in a simple phrase
+or a sentence using an n-gram algorithm. An n-gram is a 
+contiguous sequence of *n* words from a given sequence of text.
 
 The text used to build the predictive text model came from a
-large corpus of blogs, news and twitter data. N-grams were
+large corpus of twitter feeds, blogs, and news data. N-grams were
 extracted from the corpus and then used to build the
 predictive text model.
 
@@ -59,18 +59,19 @@ techniques.
 # **The Predictive Text Model**
 
 <small>
-The predictive text model was built from a sample of
-800,000 lines extracted from the large corpus of blogs,
-news and twitter data.
+The predictive text model was built from a sample of roughly
+800,000 lines extracted from the large corpus of tweets, blogs,
+and news feed data.
 
-The sample data was then
-tokenized and cleaned using the **tm** package and a number
-of regular expressions using the **gsub** function. As
-part of the cleaning process the data was converted to
-lowercase, removed all non-ascii characters, URLs,
-email addresses, Twitter handles, hash tags, ordinal numbers,
-profane words, punctuation and whitespace. The data was
-then split into tokens (n-grams).
+The sample data was then tokenized and cleaned using 
+the **tm** package and a series of regular expression 
+queries using the **gsub** function. During the cleaning 
+process the data was converted to lowercase.  All non-Ascii 
+characters were removed. URLs and email addresses were
+removed from the sample data.  Finally, Twitter handles, 
+hash tags, ordinal numbers, profane words, punctuation and 
+white space content was purged from the sample data. 
+The sample data was then split into tokens (n-grams).
 
 As text is entered by the user, the algorithm iterates
 from longest n-gram (4-gram) to shortest (2-gram) to
@@ -83,14 +84,14 @@ makes use of a simple back-off strategy.
 # **Application User Interface**
 
 <small>
-The predicted next word will be shown when the app
+The predicted word will be shown when the application
 detects that you have finished typing one or more words.
 When entering text, please allow a few seconds for the
-output to appear. Use the slider tool to select up to
-three next word predictions. The top prediction will be
-shown first followed by the second and third likely
-next words. Click the image below for a larger view
-of the user interface.
+output to appear. The slider tool can be used to select 
+up to three next word predictions. The top prediction will 
+be shown first followed by the second and third most
+probable next words. Click the image below for a larger 
+view of the user interface.
 </small>
-
-<a target="_blank" href="http://"><img src="ShinyApp.jpg" width="500" height=300"></a>
+ 
+<a target="_blank" href="https://russell-bjork.shinyapps.io/Word_Prediction_Application/"><img src="ShinyApp.jpg" width="500" height=300"></a>

@@ -1,0 +1,12 @@
+name: Word_Prediction_Application
+title: Word_Prediction_Application
+username:
+account: russell-bjork
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3470288
+bundleId: 4096045
+url: https://russell-bjork.shinyapps.io/Word_Prediction_Application/
+when: 1610637221.2458
+asMultiple: FALSE
+asStatic: FALSE

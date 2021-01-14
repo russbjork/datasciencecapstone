@@ -1,6 +1,6 @@
 # ui.R
 # Author: Russ Bjork
-# Date: 1/10/2021
+# Date: 1/15/2021
 # Description: Shiny UI, Coursera Data Science Capstone Final Project
 
 library(shiny)
@@ -23,7 +23,7 @@ shinyUI(
                             br(),
                             textInput("userInput",
                                       "Enter a word or phrase:",
-                                      value =  "The",
+                                      value =  "",
                                       placeholder = "Enter text here"),
                           ),
                           mainPanel(
@@ -39,11 +39,11 @@ shinyUI(
                       )
              ),
              tabPanel("About",
-                      h3("About Next Word Predict"),
+                      h3("About Next Word Prediction"),
                       br(),
-                      div("Next Word Predict is a Shiny app that uses a text
-                            prediction algorithm to predict the next word(s)
-                            based on text entered by a user.",
+                      div("Next Word Prediction application is a Shiny app that 
+                            uses a text prediction algorithm to predict the 
+                            next word(s) based on text entered by a user.",
                           br(),
                           br(),
                           "The predicted next word will be shown when the app
@@ -63,7 +63,7 @@ shinyUI(
                           br(),
                           br(),
                           a(target = "_blank", href = "https://github.com/russbjork/datasciencecapstone/tree/main/shinyapp",
-                            "Next Word Predict")),
+                            "Next Word Prediction")),
                       br()
              ),
              tabPanel(title = "Exit", actionButton(inputId = "quit", label = "Quit")
